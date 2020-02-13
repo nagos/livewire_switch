@@ -1,0 +1,48 @@
+{
+    "Title": "Livewire Simple Delegation Switcher",
+    "DeviceIP": "192.168.0.15",
+    "DevicePassword": "",
+    "DeviceOutputNum": 1,
+    "Columns": 1,
+    "CheckUpdatesAuto": true,
+    "GPI_DeviceIP": "192.168.0.15",
+    "GPI_DevicePassword": "",
+    "Sources": [
+        {
+            "Name": "Studio A",
+            "SourceNum": "101"
+        },
+        {
+            "Name": "Studio B",
+            "SourceNum": "201"
+        },
+        {
+            "Name": "Automation Computer",
+            "SourceNum": "51"
+        },
+        {
+            "Name": "Codec",
+            "SourceNum": "81"
+        },
+        {
+            "Name": "Satellite",
+            "SourceNum": "82"
+        },
+        {
+            "Name": "xNode SIP Input",
+            "SourceNum": "sip:2@192.168.0.15"
+        },
+        {
+            "Name": "GPI Triggered Input (Port 1, Pin 1)",
+            "SourceNum": "800",
+            "GPI_SwitchPort": 1,
+            "GPI_SwitchPin": 1
+        },
+        {
+            "Name": "GPI Triggered Input (Port 1, Pin 2)",
+            "SourceNum": "801",
+            "GPI_SwitchPort": 1,
+            "GPI_SwitchPin": 2
+        }
+    ]
+}
