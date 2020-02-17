@@ -13,19 +13,17 @@ conf_dst = 0
 conf_src = []
 
 def get_livewire():
-    print "Connecting"
     LWRP = LWRPClient(conf_ip, 93)
     LWRP.login()
     
     dst_data = LWRP.destinationData()
-    src = dst_data[args.dst-1]['attributes']['address']
+    src = dst_data[conf_dst-1]['attributes']['address']
 
     LWRP.stop()
 
     return src
 
 def switch_livewire(index):
-    print "Connecting"
     LWRP = LWRPClient(conf_ip, 93)
     LWRP.login()
     
@@ -37,11 +35,11 @@ def switch_livewire(index):
 def send_leds(socket):
     src = get_livewire()
     for i in range(len(conf_src)):
-        LWMulticastNumber = AxiaLivewireAddressHelper.streamNumToMulticastAddr(conf_src[index])
+        LWMulticastNumber = AxiaLivewireAddressHelper.streamNumToMulticastAddr(conf_src[i])
         if(src == LWMulticastNumber):
-            send_led(socket, i, 1)
+            send_led(socket, i+1, 1)
         else:
-            send_led(socket, i, 0)
+            send_led(socket, i+1, 0)
 
 
 def send_led(socket, n, value):
@@ -66,7 +64,7 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
         while True:
             ready = select.select([self.request], [], [], 1)
             if ready:
-                data = self.request.recv(1024)
+                data = self.request.recv(11)
                 if not data:
                     break
                 parse_message(self.request, data)
