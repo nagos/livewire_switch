@@ -43,7 +43,10 @@ def send_leds(socket):
 
 
 def send_led(socket, n, value):
-    socket.sendall(pack('>IxBHBH', 11, 2, n, 1, value))
+    try:
+        socket.sendall(pack('>IxBHBH', 11, 2, n, 1, value))
+    except:
+        pass
 
 def parse_message(socket, data):
     (msg_size, msg_type, type_specific, data_type, data) = unpack('>IxBHBH', data)
@@ -62,13 +65,16 @@ class MyTCPHandler(SocketServer.BaseRequestHandler):
         for i in range(1, 6):
             send_led(self.request, i, 0)
         while True:
-            ready = select.select([self.request], [], [], 1)
-            if ready:
-                data = self.request.recv(11)
-                if not data:
-                    break
-                parse_message(self.request, data)
-            send_leds(self.request)
+            try:
+                ready = select.select([self.request], [], [], 1)
+                if ready:
+                    data = self.request.recv(11)
+                    if not data:
+                        break
+                    parse_message(self.request, data)
+                send_leds(self.request)
+            except:
+                break
 
 if __name__ == "__main__":
     with open('config.json') as json_file:
